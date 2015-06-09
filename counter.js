@@ -26,8 +26,8 @@
      * type: timer(default), stopwatch 
      */
     this.endDate = new Date(this.getAttribute('end-date') );
-    this.startDate = new Date( this.getAttribute('start-date') ) || new Date(); //get current time in seconds;
-    this.type = this.getAttribute('type') === undefined ? 'timer' : this.getAttribute('type');
+    this.startDate = !this.getAttribute('start-date') ? new Date() : new Date( this.getAttribute('start-date') ); //get current time in seconds;
+    this.type = !this.getAttribute('type') ? 'timer' : this.getAttribute('type');
   };
 
   counter.updateTimerElement = function() {
