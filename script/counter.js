@@ -1,4 +1,4 @@
-(function() {
+var counter = (function() {
   'use strict';
 
   var counter = Object.create( HTMLElement.prototype );
@@ -52,4 +52,16 @@
   document.registerElement('counter-component', { 
     prototype: counter 
   });
+
+
+  return {
+    /**
+     * It will change attr with value passed and add attr if it doesn't exist
+     */
+    setAttr: function(name, value) {
+    var counter = document.querySelector('counter-component');
+    counter.setAttribute(name, value);
+  }
+  };
+
 })();
