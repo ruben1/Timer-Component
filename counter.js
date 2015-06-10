@@ -4,7 +4,7 @@
   var counter = Object.create( HTMLElement.prototype );
   counter.createdCallback = function() {
     this.getAttributesData();
-    this.currentDate = this.startDate;
+
     this.innerHTML = 
       '<div class="timer_container">' +
         '<div class="timer_seconds"></div>' +
@@ -26,17 +26,19 @@
      * type: timer(default), stopwatch 
      */
     this.endDate = new Date(this.getAttribute('end-date') );
-    this.startDate = !this.getAttribute('start-date') ? new Date() : new Date( this.getAttribute('start-date') ); //get current time in seconds;
-    this.type = !this.getAttribute('type') ? 'timer' : this.getAttribute('type');
+    console.log('inital', this.endDate);
+    this.startDate = !this.getAttribute('start-date') ? new Date() : new Date( this.getAttribute('start-date') ); //get current time in seconds if no input;
+    this.type = !this.getAttribute('type') ? 'timer' : this.getAttribute('type'); //set type to timer if no input
   };
 
   counter.updateTimerElement = function() {
     if(this.type === 'timer') {
-      this.currentDate.setSeconds(this.currentDate.getSeconds() + 1);
-      this.secondsElement.innerHTML = this.currentDate;
-    } else if(this.type === 'stopwatch') {
-      this.currentDate.setSeconds(this.currentDate.getSeconds() - 1);
-      this.secondsElement.innerHTML = this.currentDate;
+      var currentDate = (new Date()).getSeconds() - this.startDate.getSeconds();
+      this.secondsElement.innerHTML = currentDate;
+    } else if(this.type === 'stopwatch') {    
+      var timeLeft = ( this.endDate.getTime() - (new Date()).getTime() ) / 1000;
+      timeLeft = timeLeft.toString().indexOf('.') !== -1 ? timeLeft.toString().split('.')[0] : timeLeft;
+      this.secondsElement.innerHTML = timeLeft;
     }
   };
 
